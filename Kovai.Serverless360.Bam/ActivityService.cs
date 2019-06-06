@@ -1,7 +1,9 @@
 ﻿#region Using Directives
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 #endregion
@@ -65,8 +67,6 @@ namespace Kovai.Serverless360.Bam
 					return result;
 				}
 
-				var mainActivityId = activityRequest.MainActivityId.ToString();
-
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessTransaction, activityRequest.BusinessTransaction);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.CurrentStage, activityRequest.CurrentStage);
@@ -76,20 +76,22 @@ namespace Kovai.Serverless360.Bam
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BatchId, activityRequest.BatchId);
 
 				if (activityRequest.MessageHeader == null)
-					activityRequest.MessageHeader = "{}";
+					activityRequest.MessageHeader = "{\"Content-Type\":\"application/json\"}";
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
 
+				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
+				header["Content-Type"] = "application/json";
 				var body = new
 				{
-					activityRequest.MessageHeader,
-					activityRequest.MessageBody
+					activityRequest.MessageBody,
+					MessageHeader = JsonConvert.SerializeObject(header)
 				};
 
 
 				var uri = $"{_url}/api/{Constants.Operations.StartActivity}?code={_key}";
 				var data = JsonConvert.SerializeObject(body);
-				var response = await _client.PostAsync(uri, new StringContent(data));
+				var response = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
 				if (response.IsSuccessStatusCode)
 				{
 					result = await response.Content.ReadAsJsonAsync<StartActivityResponse>();
@@ -121,21 +123,24 @@ namespace Kovai.Serverless360.Bam
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.Status, Enum.GetName(typeof(StageStatus), activityRequest.Status));
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsArchiveEnabled, Convert.ToString(activityRequest.IsArchiveEnabled));
 
+
 				if (activityRequest.MessageHeader == null)
-					activityRequest.MessageHeader = "{}";
+					activityRequest.MessageHeader = "{\"Content-Type\":\"application/json\"}";
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
 
+				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
+				header["Content-Type"] = "application/json";
 				var body = new
 				{
 					activityRequest.MessageBody,
-					activityRequest.MessageHeader
+					MessageHeader = JsonConvert.SerializeObject(header)
 				};
 
 				var uri = $"{_url}/api/{Constants.Operations.UpdateActivity}?code={_key}";
 
 				var data = JsonConvert.SerializeObject(body);
-				var content = await _client.PostAsync(uri, new StringContent(data));
+				var content = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
 				return content.IsSuccessStatusCode;
 			}
 			catch (Exception ex)
@@ -160,21 +165,24 @@ namespace Kovai.Serverless360.Bam
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessTransaction, activityRequest.BusinessTransaction);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.CurrentStage, activityRequest.CurrentStage);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageActivityId, activityRequest.StageActivityId.ToString());
-				
+
+
 				if (activityRequest.MessageHeader == null)
-					activityRequest.MessageHeader = "{}";
+					activityRequest.MessageHeader = "{\"Content-Type\":\"application/json\"}";
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
 
+				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
+				header["Content-Type"] = "application/json";
 				var body = new
 				{
 					activityRequest.MessageBody,
-					activityRequest.MessageHeader
+					MessageHeader = JsonConvert.SerializeObject(header)
 				};
 
 				var uri = $"{_url}/api/{Constants.Operations.ArchiveActivity}?code={_key}";
 				var data = JsonConvert.SerializeObject(body);
-				var content = await _client.PostAsync(uri, new StringContent(data));
+				var content = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
 				return content.IsSuccessStatusCode;
 			}
 			catch (Exception ex)
@@ -199,6 +207,7 @@ namespace Kovai.Serverless360.Bam
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionCode, activityRequest.ExceptionCode);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionMessage, activityRequest.ExceptionMessage);
+
 
 				var uri = $"{_url}/api/{Constants.Operations.LogExceptionActivity}?code={_key}";
 

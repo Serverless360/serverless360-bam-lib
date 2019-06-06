@@ -10,7 +10,7 @@ namespace Kovai.Serverless360.Sample
 		public LogisticsProcessor(IActivityService service)
 		{
 			_service = service;
-			_businessProcess = "ShipAnyWhereLogistics";
+			_businessProcess = "Ship Any Where Logistics";
 		}
 
 		public void SendBookingRequest()
@@ -24,7 +24,10 @@ namespace Kovai.Serverless360.Sample
 				BusinessProcess = _businessProcess,
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Receive",
-				PreviousStage = "."
+				PreviousStage = ".",
+				IsArchiveEnabled = true,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -34,7 +37,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Receive",
 				MainActivityId = receiveResponse.MainActivityId,
 				StageActivityId = receiveResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			});
 
 			//Process
@@ -45,7 +50,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Process",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Receive"
+				PreviousStage = "Receive",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -55,7 +62,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Process",
 				MainActivityId = processResponse.MainActivityId,
 				StageActivityId = processResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			});
 
 			//Send
@@ -66,7 +75,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Send",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Process"
+				PreviousStage = "Process",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -76,7 +87,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Send",
 				MainActivityId = sendResponse.MainActivityId,
 				StageActivityId = sendResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			});
 		}
 
@@ -91,7 +104,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessProcess = _businessProcess,
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Receive",
-				PreviousStage = "."
+				PreviousStage = ".",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -101,7 +116,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Receive",
 				MainActivityId = receiveResponse.MainActivityId,
 				StageActivityId = receiveResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}",
 			});
 
 			//Process
@@ -112,7 +129,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Process",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Receive"
+				PreviousStage = "Receive",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -122,7 +141,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Process",
 				MainActivityId = processResponse.MainActivityId,
 				StageActivityId = processResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 
 			//Send
@@ -133,7 +154,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Send",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Process"
+				PreviousStage = "Process",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -143,7 +166,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Send",
 				MainActivityId = sendResponse.MainActivityId,
 				StageActivityId = sendResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 		}
 
@@ -158,7 +183,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessProcess = _businessProcess,
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Receive",
-				PreviousStage = "."
+				PreviousStage = ".",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -168,7 +195,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Receive",
 				MainActivityId = receiveResponse.MainActivityId,
 				StageActivityId = receiveResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 
 			//Process
@@ -179,7 +208,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Process",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Receive"
+				PreviousStage = "Receive",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -189,7 +220,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Process",
 				MainActivityId = processResponse.MainActivityId,
 				StageActivityId = processResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 
 			//Send
@@ -200,7 +233,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Send",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Process"
+				PreviousStage = "Process",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -210,7 +245,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Send",
 				MainActivityId = sendResponse.MainActivityId,
 				StageActivityId = sendResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 		}
 
@@ -225,7 +262,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessProcess = _businessProcess,
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Receive",
-				PreviousStage = "."
+				PreviousStage = ".",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -235,7 +274,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Receive",
 				MainActivityId = receiveResponse.MainActivityId,
 				StageActivityId = receiveResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 
 			//Process
@@ -246,7 +287,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Process",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Receive"
+				PreviousStage = "Receive",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -256,7 +299,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Process",
 				MainActivityId = processResponse.MainActivityId,
 				StageActivityId = processResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 
 			//Send
@@ -267,7 +312,9 @@ namespace Kovai.Serverless360.Sample
 				BusinessTransaction = businessTransaction,
 				CurrentStage = "Send",
 				MainActivityId = receiveResponse.MainActivityId,
-				PreviousStage = "Process"
+				PreviousStage = "Process",
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			}).Result;
 
 			_service.UpdateActivity(new UpdateActivityRequest()
@@ -277,7 +324,9 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Send",
 				MainActivityId = sendResponse.MainActivityId,
 				StageActivityId = sendResponse.StageActivityId,
-				Status = StageStatus.Success
+				Status = StageStatus.Success,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
 			});
 		}
 
