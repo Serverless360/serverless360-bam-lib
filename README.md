@@ -1,2 +1,2 @@
-# serverless360-bam-lib
-Library to help log activities to Serverless360 BAM solution
+# Introduction
+This library helps you to track business activities from you .Net applications.
