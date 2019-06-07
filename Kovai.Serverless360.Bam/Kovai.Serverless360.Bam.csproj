@@ -7,10 +7,20 @@
     <Company>kovai.co</Company>
     <Authors>kovai.co</Authors>
     <Product>Serverless360</Product>
+    <Description>This library helps you to track business activities from your .Net applications to Serverless360</Description>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
