@@ -14,7 +14,7 @@ namespace Kovai.Serverless360.Bam.Tests
 {
 	public class ActivityTests
 	{
-		private const string Key = "h1XqRO8J1tbkHABsfxQEYdGPNYzDX1i3kHzqIpXh4albzaXKesbNDg==";
+		private const string Key = "provide your key";
 		public ActivityTests()
 		{
 

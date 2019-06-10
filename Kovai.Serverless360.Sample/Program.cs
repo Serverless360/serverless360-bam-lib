@@ -7,7 +7,7 @@ namespace Kovai.Serverless360.Sample
 
 		static void Main(string[] args)
 		{
-			var processor = new LogisticsProcessor(new ActivityService("V9sOiZ6eE0jDjq25zFpKEzejlk2jAija4cCqU290b15qcoi8/iynvw=="));
+			var processor = new LogisticsProcessor(new ActivityService("provide your key"));
 
 			processor.SendBookingRequest();
 			processor.ConfirmBooking();
