@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Kovai.Serverless360.Bam" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Kovai.Serverless360.Bam\Kovai.Serverless360.Bam.csproj" />
   </ItemGroup>
 
   <ItemGroup>

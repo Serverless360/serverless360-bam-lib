@@ -17,7 +17,7 @@ namespace Kovai.Serverless360.Bam
 				var contentStr = await content.ReadAsStringAsync();
 				return JsonConvert.DeserializeObject<T>(contentStr);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return default;
 			}
