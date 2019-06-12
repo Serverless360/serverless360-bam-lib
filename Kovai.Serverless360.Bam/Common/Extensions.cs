@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 
 namespace Kovai.Serverless360.Bam
 {
-	public static class Extensions
+	internal static class Extensions
 	{
-		public static async Task<T> ReadAsJsonAsync<T>(this HttpContent content) where T : class
+		internal static async Task<T> ReadAsJsonAsync<T>(this HttpContent content) where T : class
 		{
 			try
 			{
@@ -23,11 +23,20 @@ namespace Kovai.Serverless360.Bam
 			}
 		}
 
-		public static void AddOrReplace(this HttpRequestHeaders headers, string name, string value)
+		internal static void AddOrReplace(this HttpRequestHeaders headers, string name, string value)
 		{
 			if (headers.Contains(name))
 				headers.Remove(name);
 			headers.Add(name, value);
+		}
+
+		internal static bool IsNotNullOrEmpty(this string str)
+		{
+			return !string.IsNullOrEmpty(str);
+		}
+		internal static bool IsNullOrEmpty(this string str)
+		{
+			return string.IsNullOrEmpty(str);
 		}
 	}
 }

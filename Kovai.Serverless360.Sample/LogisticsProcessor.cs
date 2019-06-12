@@ -68,7 +68,7 @@ namespace Kovai.Serverless360.Sample
 			});
 
 			//Send
-			
+
 			var sendResponse = _service.StartActivity(new StartActivityRequest
 			{
 				BusinessProcess = _businessProcess,
@@ -147,7 +147,7 @@ namespace Kovai.Serverless360.Sample
 			});
 
 			//Send
-			
+
 			var sendResponse = _service.StartActivity(new StartActivityRequest
 			{
 				BusinessProcess = _businessProcess,
@@ -200,6 +200,16 @@ namespace Kovai.Serverless360.Sample
 				MessageHeader = "{\"some\":1}"
 			});
 
+			_service.ArchiveActivity(new ArchiveActivityRequest()
+			{
+				BusinessProcess = _businessProcess,
+				BusinessTransaction = businessTransaction,
+				CurrentStage = "Receive",
+				StageActivityId = receiveResponse.StageActivityId,
+				MessageBody = "{\"some\":1}",
+				MessageHeader = "{\"some\":1}"
+			});
+
 			//Process
 
 			var processResponse = _service.StartActivity(new StartActivityRequest
@@ -226,7 +236,7 @@ namespace Kovai.Serverless360.Sample
 			});
 
 			//Send
-			
+
 			var sendResponse = _service.StartActivity(new StartActivityRequest
 			{
 				BusinessProcess = _businessProcess,
@@ -305,7 +315,7 @@ namespace Kovai.Serverless360.Sample
 			});
 
 			//Send
-			
+
 			var sendResponse = _service.StartActivity(new StartActivityRequest
 			{
 				BusinessProcess = _businessProcess,
@@ -327,6 +337,14 @@ namespace Kovai.Serverless360.Sample
 				Status = StageStatus.Success,
 				MessageBody = "{\"some\":1}",
 				MessageHeader = "{\"some\":1}"
+			});
+
+			_service.LogExceptionActivity(new LogExceptionActivityRequest
+			{
+				StageActivityId = sendResponse.StageActivityId,
+				ExceptionMessage = "Sample Error Message",
+				ExceptionCode = "XXX0000",
+				BusinessProcess = _businessProcess
 			});
 		}
 

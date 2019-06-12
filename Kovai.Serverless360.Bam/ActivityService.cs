@@ -11,61 +11,89 @@ using Newtonsoft.Json;
 [assembly: InternalsVisibleTo("Kovai.Serverless360.Bam.Tests")]
 namespace Kovai.Serverless360.Bam
 {
+	/// <summary>
+	/// Provides a base class to send activties to Serverless360 APIs.
+	/// </summary>
+	/// <seealso cref="Kovai.Serverless360.Bam.IActivityService" />
 	public class ActivityService : IActivityService
 	{
 		private readonly string _key;
 		private readonly string _url;
-		private readonly ILogger _logger;
+		private readonly IBamActivityLogger _bamActivityLogger;
 		private readonly HttpClient _client;
 
+		/// <summary>Initializes a new instance of the <see cref="ActivityService"/> class.</summary>
+		/// <param name="key">The key.</param>
 		public ActivityService(string key)
 		{
 			_key = key;
 			_url = Constants.FunctionUrlPattern;
 			_client = new HttpClient();
-			_logger = new NullLogger();
+			_bamActivityLogger = new NullBamActivityLogger();
 		}
 
-		public ActivityService(string key, ILogger logger)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ActivityService"/> class.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="bamActivityLogger">The logger.</param>
+		public ActivityService(string key, IBamActivityLogger bamActivityLogger)
 		{
 			_key = key;
 			_url = Constants.FunctionUrlPattern;
-			_logger = logger;
+			_bamActivityLogger = bamActivityLogger;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ActivityService"/> class.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="url">The URL.</param>
 		public ActivityService(string key, string url)
 		{
 			_key = key;
 			_url = url;
-			_logger = new NullLogger();
+			_bamActivityLogger = new NullBamActivityLogger();
 		}
 
-		public ActivityService(string key, string url, ILogger logger)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ActivityService"/> class.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="url">The URL.</param>
+		/// <param name="bamActivityLogger">The logger.</param>
+		public ActivityService(string key, string url, IBamActivityLogger bamActivityLogger)
 		{
 			_key = key;
 			_url = url;
-			_logger = logger;
+			_bamActivityLogger = bamActivityLogger;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ActivityService"/> class.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="client">The client.</param>
 		internal ActivityService(string key, HttpClient client)
 		{
 			_key = key;
 			_url = Constants.FunctionUrlPattern;
 			_client = client;
-			_logger = new NullLogger();
+			_bamActivityLogger = new NullBamActivityLogger();
 		}
 
 
+		/// <summary>
+		/// Starts the activity.
+		/// </summary>
+		/// <param name="activityRequest">The activity request.</param>
+		/// <returns></returns>
 		public async Task<StartActivityResponse> StartActivity(StartActivityRequest activityRequest)
 		{
 			var result = new StartActivityResponse();
 			try
 			{
-				if (!activityRequest.IsValid())
-				{
-					_logger.Error("Invalid start activity request");
-					return result;
-				}
+				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessTransaction, activityRequest.BusinessTransaction);
@@ -79,6 +107,9 @@ namespace Kovai.Serverless360.Bam
 					activityRequest.MessageHeader = "{\"Content-Type\":\"application/json\"}";
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
+				
+				if (activityRequest.PreviousStage.IsNullOrEmpty())
+					activityRequest.PreviousStage = ".";
 
 				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
 				header["Content-Type"] = "application/json";
@@ -100,20 +131,21 @@ namespace Kovai.Serverless360.Bam
 			}
 			catch (Exception ex)
 			{
-				_logger.Error(ex.Message);
+				_bamActivityLogger.Error(ex.Message);
 			}
 			return result;
 		}
 
+		/// <summary>
+		/// Updates the activity.
+		/// </summary>
+		/// <param name="activityRequest">The activity request.</param>
+		/// <returns></returns>
 		public async Task<bool> UpdateActivity(UpdateActivityRequest activityRequest)
 		{
 			try
 			{
-				if (!activityRequest.IsValid())
-				{
-					_logger.Error("Invalid update activity request");
-					return false;
-				}
+				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessTransaction, activityRequest.BusinessTransaction);
@@ -121,7 +153,7 @@ namespace Kovai.Serverless360.Bam
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.MainActivityId, activityRequest.MainActivityId.ToString());
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageActivityId, activityRequest.StageActivityId.ToString());
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.Status, Enum.GetName(typeof(StageStatus), activityRequest.Status));
-				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsArchiveEnabled, Convert.ToString(activityRequest.IsArchiveEnabled));
+				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ArchiveMessage, Convert.ToString(activityRequest.IsArchiveEnabled));
 
 
 				if (activityRequest.MessageHeader == null)
@@ -145,21 +177,22 @@ namespace Kovai.Serverless360.Bam
 			}
 			catch (Exception ex)
 			{
-				_logger.Error(ex.Message);
+				_bamActivityLogger.Error(ex.Message);
 			}
 
 			return false;
 		}
 
+		/// <summary>
+		/// Archives the activity.
+		/// </summary>
+		/// <param name="activityRequest">The activity request.</param>
+		/// <returns></returns>
 		public async Task<bool> ArchiveActivity(ArchiveActivityRequest activityRequest)
 		{
 			try
 			{
-				if (!activityRequest.IsValid())
-				{
-					_logger.Error("Invalid archive activity request");
-					return false;
-				}
+				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessTransaction, activityRequest.BusinessTransaction);
@@ -187,21 +220,22 @@ namespace Kovai.Serverless360.Bam
 			}
 			catch (Exception ex)
 			{
-				_logger.Error(ex.Message);
+				_bamActivityLogger.Error(ex.Message);
 			}
 
 			return false;
 		}
 
+		/// <summary>
+		/// Logs the exception activity.
+		/// </summary>
+		/// <param name="activityRequest">The activity request.</param>
+		/// <returns></returns>
 		public async Task<bool> LogExceptionActivity(LogExceptionActivityRequest activityRequest)
 		{
 			try
 			{
-				if (!activityRequest.IsValid())
-				{
-					_logger.Error("Invalid log exception activity request");
-					return false;
-				}
+				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageActivityId, activityRequest.StageActivityId.ToString());
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
@@ -216,7 +250,7 @@ namespace Kovai.Serverless360.Bam
 			}
 			catch (Exception ex)
 			{
-				_logger.Error(ex.Message);
+				_bamActivityLogger.Error(ex.Message);
 			}
 
 			return false;

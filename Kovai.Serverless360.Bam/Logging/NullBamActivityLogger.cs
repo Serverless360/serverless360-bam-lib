@@ -1,6 +1,6 @@
 ﻿namespace Kovai.Serverless360.Bam
 {
-	public class NullLogger : ILogger
+	public class NullBamActivityLogger : IBamActivityLogger
 	{
 		public void Debug(string message)
 		{
