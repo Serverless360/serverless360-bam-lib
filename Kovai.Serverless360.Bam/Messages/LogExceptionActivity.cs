@@ -1,9 +1,12 @@
 ﻿#region Using Directives
 using System;
+using System.Runtime.Serialization;
+
 #endregion
 
 namespace Kovai.Serverless360.Bam
 {
+	[DataContract]
 	public class LogExceptionActivityRequest
 	{
 		/// <summary>
@@ -12,6 +15,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The stage activity identifier.
 		/// </value>
+		[DataMember]
 		public Guid StageActivityId { get; set; }
 		/// <summary>
 		/// Gets or sets the exception message.
@@ -19,6 +23,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The exception message.
 		/// </value>
+		[DataMember]
 		public string ExceptionMessage { get; set; }
 		/// <summary>
 		/// Gets or sets the exception code.
@@ -26,6 +31,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The exception code.
 		/// </value>
+		[DataMember]
 		public string ExceptionCode { get; set; }
 		/// <summary>
 		/// Gets or sets the business process.
@@ -33,6 +39,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The business process.
 		/// </value>
+		[DataMember]
 		public string BusinessProcess { get; set; }
 
 		/// <summary>

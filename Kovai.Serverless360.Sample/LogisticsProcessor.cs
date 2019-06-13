@@ -26,7 +26,7 @@ namespace Kovai.Serverless360.Sample
 				CurrentStage = "Receive",
 				PreviousStage = ".",
 				IsArchiveEnabled = true,
-				MessageBody = "{\"some\":1}",
+				MessageBody = "{\"tim\":1}",
 				MessageHeader = "{\"some\":1}",
 			}).Result;
 

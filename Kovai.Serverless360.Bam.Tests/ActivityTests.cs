@@ -6,8 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
 using Xunit;
 #endregion
 
@@ -34,11 +32,11 @@ namespace Kovai.Serverless360.Bam.Tests
 				.ReturnsAsync(new HttpResponseMessage()
 				{
 					StatusCode = HttpStatusCode.OK,
-					Content = new StringContent(JsonConvert.SerializeObject(new StartActivityResponse()
+					Content = new StringContent(new StartActivityResponse()
 					{
 						MainActivityId = Guid.NewGuid(),
 						StageActivityId = Guid.NewGuid()
-					}))
+					}.Serialize())
 				})
 				.Verifiable();
 
@@ -82,11 +80,11 @@ namespace Kovai.Serverless360.Bam.Tests
 				.ReturnsAsync(new HttpResponseMessage()
 				{
 					StatusCode = HttpStatusCode.OK,
-					Content = new StringContent(JsonConvert.SerializeObject(new StartActivityResponse()
+					Content = new StringContent(new StartActivityResponse()
 					{
 						MainActivityId = Guid.NewGuid(),
 						StageActivityId = Guid.NewGuid()
-					}))
+					}.Serialize())
 				})
 				.Verifiable();
 

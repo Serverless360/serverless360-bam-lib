@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 #endregion
 
 [assembly: InternalsVisibleTo("Kovai.Serverless360.Bam.Tests")]
@@ -93,6 +92,7 @@ namespace Kovai.Serverless360.Bam
 			var result = new StartActivityResponse();
 			try
 			{
+				_bamActivityLogger.Debug($"Starting Stage Activity - {activityRequest.Serialize()}");
 				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
@@ -107,21 +107,21 @@ namespace Kovai.Serverless360.Bam
 					activityRequest.MessageHeader = "{\"Content-Type\":\"application/json\"}";
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
-				
+
 				if (activityRequest.PreviousStage.IsNullOrEmpty())
 					activityRequest.PreviousStage = ".";
 
-				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
+				var header = activityRequest.MessageHeader.DeSerialize<Dictionary<string, string>>();
 				header["Content-Type"] = "application/json";
-				var body = new
+				var body = new ActivityContent
 				{
-					activityRequest.MessageBody,
-					MessageHeader = JsonConvert.SerializeObject(header)
+					MessageBody = activityRequest.MessageBody,
+					MessageHeader = header.Serialize<Object>()
 				};
 
 
 				var uri = $"{_url}/api/{Constants.Operations.StartActivity}?code={_key}";
-				var data = JsonConvert.SerializeObject(body);
+				var data = body.Serialize();
 				var response = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
 				if (response.IsSuccessStatusCode)
 				{
@@ -145,6 +145,7 @@ namespace Kovai.Serverless360.Bam
 		{
 			try
 			{
+				_bamActivityLogger.Debug($"Updating Stage Activity - {activityRequest.Serialize()}");
 				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
@@ -161,17 +162,17 @@ namespace Kovai.Serverless360.Bam
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
 
-				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
+				var header = activityRequest.MessageHeader.DeSerialize<Dictionary<string, object>>();
 				header["Content-Type"] = "application/json";
-				var body = new
+				var body = new ActivityContent
 				{
-					activityRequest.MessageBody,
-					MessageHeader = JsonConvert.SerializeObject(header)
+					MessageBody = activityRequest.MessageBody,
+					MessageHeader = header.Serialize()
 				};
 
 				var uri = $"{_url}/api/{Constants.Operations.UpdateActivity}?code={_key}";
 
-				var data = JsonConvert.SerializeObject(body);
+				var data = body.Serialize();
 				var content = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
 				return content.IsSuccessStatusCode;
 			}
@@ -192,6 +193,7 @@ namespace Kovai.Serverless360.Bam
 		{
 			try
 			{
+				_bamActivityLogger.Debug($"Archiving Stage Activity - {activityRequest.Serialize()}");
 				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, activityRequest.BusinessProcess);
@@ -205,16 +207,16 @@ namespace Kovai.Serverless360.Bam
 				if (activityRequest.MessageBody == null)
 					activityRequest.MessageBody = "{}";
 
-				var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(activityRequest.MessageHeader);
+				var header = activityRequest.MessageHeader.DeSerialize<Dictionary<string, object>>();
 				header["Content-Type"] = "application/json";
-				var body = new
+				var body = new ActivityContent
 				{
-					activityRequest.MessageBody,
-					MessageHeader = JsonConvert.SerializeObject(header)
+					MessageBody = activityRequest.MessageBody,
+					MessageHeader = header.Serialize()
 				};
 
 				var uri = $"{_url}/api/{Constants.Operations.ArchiveActivity}?code={_key}";
-				var data = JsonConvert.SerializeObject(body);
+				var data = body.Serialize();
 				var content = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
 				return content.IsSuccessStatusCode;
 			}
@@ -235,6 +237,7 @@ namespace Kovai.Serverless360.Bam
 		{
 			try
 			{
+				_bamActivityLogger.Debug($"Logging Exception Activity - {activityRequest.Serialize()}");
 				activityRequest.Validate();
 
 				_client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageActivityId, activityRequest.StageActivityId.ToString());

@@ -1,9 +1,12 @@
 ﻿#region Using Directives
 using System;
+using System.Runtime.Serialization;
+
 #endregion
 
 namespace Kovai.Serverless360.Bam
 {
+	[DataContract]
 	public class UpdateActivityRequest
 	{
 		/// <summary>
@@ -12,6 +15,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The business process.
 		/// </value>
+		[DataMember]
 		public string BusinessProcess { get; set; }
 		/// <summary>
 		/// Gets or sets the business transaction.
@@ -19,6 +23,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The business transaction.
 		/// </value>
+		[DataMember]
 		public string BusinessTransaction { get; set; }
 		/// <summary>
 		/// Gets or sets the current stage.
@@ -26,6 +31,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The current stage.
 		/// </value>
+		[DataMember]
 		public string CurrentStage { get; set; }
 		/// <summary>
 		/// Gets or sets the message body.
@@ -33,6 +39,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The message body.
 		/// </value>
+		[DataMember]
 		public string MessageBody { get; set; }
 		/// <summary>
 		/// Gets or sets the message header.
@@ -40,6 +47,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The message header.
 		/// </value>
+		[DataMember]
 		public string MessageHeader { get; set; }
 		/// <summary>
 		/// Gets or sets the main activity identifier.
@@ -47,6 +55,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The main activity identifier.
 		/// </value>
+		[DataMember]
 		public Guid MainActivityId { get; set; }
 		/// <summary>
 		/// Gets or sets the stage activity identifier.
@@ -54,6 +63,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The stage activity identifier.
 		/// </value>
+		[DataMember]
 		public Guid StageActivityId { get; set; }
 		/// <summary>
 		/// Gets or sets the status.
@@ -61,6 +71,7 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		/// The status.
 		/// </value>
+		[DataMember]
 		public StageStatus Status { get; set; }
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is archive enabled.
@@ -68,8 +79,8 @@ namespace Kovai.Serverless360.Bam
 		/// <value>
 		///   <c>true</c> if this instance is archive enabled; otherwise, <c>false</c>.
 		/// </value>
+		[DataMember]
 		public bool IsArchiveEnabled { get; set; }
-
 
 		/// <summary>
 		/// Validates this instance.
