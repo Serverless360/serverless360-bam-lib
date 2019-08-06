@@ -39,6 +39,7 @@ namespace Kovai.Serverless360.Bam
 		public ActivityService(string key, IBamActivityLogger bamActivityLogger)
 		{
 			_key = key;
+			_client = new HttpClient();
 			_url = Constants.FunctionUrlPattern;
 			_bamActivityLogger = bamActivityLogger;
 		}

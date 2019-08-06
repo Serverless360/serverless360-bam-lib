@@ -21,8 +21,9 @@ namespace Kovai.Samples.FuncApp
 		{
 			log.LogInformation("C# HTTP trigger function processed a request.");
 
+			//Add your own Logger for Info / Sending Notifications etc..
 			var logger = new Logger(log);
-			IActivityService service = new ActivityService("nDePz42/QBkIQ7iyuRfpWbd1Ia8DtMaRjBKWuFUbRqEPFUrpQNa6bg==", logger);
+			IActivityService service = new ActivityService("ggDoKMKQF0BDDeNYyImfxgvhzOQ72u7fgQUixQguZqf94pwqyUpiTg==", logger);
 			var response = await service.StartActivity(new StartActivityRequest()
 			{
 				BusinessProcess = "Ship Any Where Logistics",
@@ -31,7 +32,7 @@ namespace Kovai.Samples.FuncApp
 				PreviousStage = ".",
 				IsArchiveEnabled = true,
 				MessageBody = "{\"some\":1}",
-				MessageHeader = "",
+				MessageHeader = "{\"some\":1}",
 			});
 
 			return new OkObjectResult(response);

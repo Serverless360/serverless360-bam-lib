@@ -7,11 +7,7 @@ namespace Kovai.Serverless360.Sample
 	{
 		static void Main()
 		{
-			IConfiguration config = new ConfigurationBuilder()
-					.AddJsonFile("appsettings.json", true, true)
-					.Build();
-			var processor = new LogisticsProcessor(new ActivityService(config["code"]));
-
+			var processor = new LogisticsProcessor(new ActivityService("ggDoKMKQF0BDDeNYyImfxgvhzOQ72u7fgQUixQguZqf94pwqyUpiTg"));
 			processor.SendBookingRequest();
 			processor.ConfirmBooking();
 			processor.SendShippingInstructions();
