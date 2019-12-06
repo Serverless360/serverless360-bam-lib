@@ -5,9 +5,9 @@ namespace Kovai.Serverless360.Sample
 {
 	public static class Extension
 	{
-		public static bool IsValid(this StartActivityResponse activityResponse)
+		public static bool IsValid(this StartTransactionResponse activityResponse)
 		{
-			if (activityResponse.MainActivityId != Guid.Empty && activityResponse.StageActivityId != Guid.Empty)
+			if (activityResponse.TransactionInstanceId != Guid.Empty && activityResponse.StageInstanceId != Guid.Empty)
 				return true;
 			return false;
 		}

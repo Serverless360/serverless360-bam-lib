@@ -23,8 +23,8 @@ namespace Kovai.Samples.FuncApp
 
 			//Add your own Logger for Info / Sending Notifications etc..
 			var logger = new Logger(log);
-			IActivityService service = new ActivityService("ggDoKMKQF0BDDeNYyImfxgvhzOQ72u7fgQUixQguZqf94pwqyUpiTg==", logger);
-			var response = await service.StartActivity(new StartActivityRequest()
+			ITransactionService service = new ActivityService("ggDoKMKQF0BDDeNYyImfxgvhzOQ72u7fgQUixQguZqf94pwqyUpiTg==", logger);
+			var response = await service.StartTransaction(new StartTransactionRequest()
 			{
 				BusinessProcess = "Ship Any Where Logistics",
 				BusinessTransaction = "Booking Request",

@@ -7,7 +7,7 @@ namespace Kovai.Serverless360.Sample
 	{
 		static void Main()
 		{
-			var processor = new LogisticsProcessor(new ActivityService("ggDoKMKQF0BDDeNYyImfxgvhzOQ72u7fgQUixQguZqf94pwqyUpiTg"));
+			var processor = new LogisticsProcessor(new TransactionService("ggDoKMKQF0BDDeNYyImfxgvhzOQ72u7fgQUixQguZqf94pwqyUpiTg"));
 			processor.SendBookingRequest();
 			processor.ConfirmBooking();
 			processor.SendShippingInstructions();
