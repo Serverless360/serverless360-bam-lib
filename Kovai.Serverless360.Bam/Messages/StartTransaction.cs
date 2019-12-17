@@ -81,15 +81,24 @@ namespace Kovai.Serverless360.Bam
         public bool IsTransactionComplete { get; set; }
 
         /// <summary>
-        /// Gets or sets the is exception.
+        /// Gets or sets the exception message.
         /// </summary>
         /// <value>
-        /// The is exception.
+        /// The is exception message.
         /// </value>
         [DataMember]
-        public string Exception { get; set; }
+        public string ExceptionMessage { get; set; }
 
+        /// <summary>
+        /// Gets or sets the exception code.
+        /// </summary>
+        /// <value>
+        /// The is exception code.
+        /// </value>
+        [DataMember]
+        public string ExceptionCode { get; set; }
 
+         
         /// <summary>
         /// Validates this instance.
         /// </summary>

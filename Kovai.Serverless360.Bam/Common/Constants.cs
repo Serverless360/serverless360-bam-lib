@@ -18,7 +18,8 @@
             public const string ArchiveMessage = "SL360-ArchiveMessage";
             public const string BatchId = "SL360-BatchId";
             public const string StageStatus = "SL360-StageStatus";
-            public const string Exception = "SL360-Exception";
+            public const string ExceptionMessage = "SL360-Exception";
+            public const string ExceptionCode = "SL360-ExceptionCode";
             public const string IsTransactionComplete = "SL360-IsTransactionComplete";
         }
 
