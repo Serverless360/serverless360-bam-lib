@@ -20,15 +20,6 @@ namespace Kovai.Serverless360.Bam
     private readonly string _url;
     private readonly HttpClient _client;
 
-    /// <summary>Initializes a new instance of the <see cref="TransactionService"/> class.</summary>
-    /// <param name="key">The key.</param>
-    public TransactionService(string key)
-    {
-      _key = key;
-      _url = Constants.FunctionUrlPattern;
-      _client = new HttpClient();
-    }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TransactionService"/> class.
     /// </summary>

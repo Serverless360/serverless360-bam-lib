@@ -6,7 +6,7 @@ namespace Kovai.Serverless360.Sample
   {
     static void Main()
     {
-      var processor = new OrderProcessor(new TransactionService("key"));
+      var processor = new OrderProcessor(new TransactionService("key", "FunctionAppUrl"));
       processor.ProcessOrders();
     }
   }
