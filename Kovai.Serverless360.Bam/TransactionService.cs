@@ -186,7 +186,7 @@ namespace Kovai.Serverless360.Bam
           Property = JsonConvert.SerializeObject(correlationCheckPointRequest.CorrelationProperties.Select(c => new Property() { Name = c.Key, Value = c.Value }).ToList())
         };
 
-        var uri = $"{_url}/api/{Constants.Operations.CheckPoint}?code={_key}";
+        var uri = $"{_url}/api/{Constants.Operations.CorrelationCheckPoint}?code={_key}";
 
         var data = body.Serialize();
         var content = await _client.PostAsync(uri, new StringContent(data, Encoding.UTF8, "application/json"));
