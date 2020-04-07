@@ -160,7 +160,6 @@ namespace Kovai.Serverless360.Bam
         correlationCheckPointRequest.Validate();
 
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.Stage, correlationCheckPointRequest.Stage);
-        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageInstanceId, correlationCheckPointRequest.StageInstanceId.ToString());
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ArchiveMessage, Convert.ToString(correlationCheckPointRequest.ArchiveMessage));
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageStatus, correlationCheckPointRequest.StageStatus.ToString());
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionMessage, correlationCheckPointRequest.ExceptionMessage);
@@ -183,7 +182,7 @@ namespace Kovai.Serverless360.Bam
         {
           MessageBody = correlationCheckPointRequest.MessageBody,
           MessageHeader = header?.Serialize(),
-          Property = JsonConvert.SerializeObject(correlationCheckPointRequest.CorrelationProperties.Select(c => new Property() { Name = c.Key, Value = c.Value }).ToList())
+          Property = correlationCheckPointRequest.CorrelationProperties.Select(c => new Property() { Name = c.Key, Value = c.Value }).ToList()
         };
 
         var uri = $"{_url}/api/{Constants.Operations.CorrelationCheckPoint}?code={_key}";

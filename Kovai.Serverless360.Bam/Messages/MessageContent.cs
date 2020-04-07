@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Kovai.Serverless360.Bam
 {
@@ -10,7 +11,7 @@ namespace Kovai.Serverless360.Bam
         [DataMember]
         public string MessageHeader { get; set; }
         [DataMember]
-        public string Property { get; set; }
+        public List<Property> Property { get; set; }
     }
     internal class Property
     {

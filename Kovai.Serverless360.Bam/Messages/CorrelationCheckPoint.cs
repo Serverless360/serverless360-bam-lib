@@ -42,16 +42,6 @@ namespace Kovai.Serverless360.Bam
         /// </value>
         [DataMember]
         public Dictionary<string, object> CorrelationProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stage instance.
-        /// </summary>
-        /// <value>
-        /// The main stage instance.
-        /// </value>
-        [DataMember]
-        public Guid StageInstanceId { get; set; }
-
         /// <summary>
         /// Gets or sets a value indicating whether this instance is archive enabled.
         /// </summary>
