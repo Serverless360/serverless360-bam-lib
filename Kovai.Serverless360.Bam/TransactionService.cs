@@ -166,6 +166,8 @@ namespace Kovai.Serverless360.Bam
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionCode, correlationCheckPointRequest.ExceptionCode);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BatchId, correlationCheckPointRequest.BatchId);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsTransactionComplete, Convert.ToString(correlationCheckPointRequest.IsTransactionComplete));
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, correlationCheckPointRequest.BusinessProcess);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.Transaction, correlationCheckPointRequest.Transaction);
 
 
         if (correlationCheckPointRequest.MessageHeader == null)
