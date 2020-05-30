@@ -76,7 +76,7 @@ namespace Kovai.Serverless360.Bam
     /// The stage status.
     /// </value>
     [DataMember]
-    public StageStatus StageStatus { get; set; }
+    public StageStatus? StageStatus { get; set; }
 
     /// <summary>
     /// Gets or sets the is transaction complete.
@@ -85,7 +85,7 @@ namespace Kovai.Serverless360.Bam
     /// The is transaction complete.
     /// </value>
     [DataMember]
-    public bool IsTransactionComplete { get; set; }
+    public bool? IsTransactionComplete { get; set; }
 
     /// <summary>
     /// Gets or sets the exception message.
