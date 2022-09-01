@@ -63,7 +63,10 @@ namespace Kovai.Serverless360.Bam
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageStatus, transactionRequest.StageStatus?.ToString());
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionMessage, transactionRequest.ExceptionMessage);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionCode, transactionRequest.ExceptionCode);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsBatchedTransaction, transactionRequest.IsBatchedTransaction);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BatchId, transactionRequest.BatchId);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsBatchedStage, transactionRequest.IsBatchedStage);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageBatchId, transactionRequest.StageBatchId);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsTransactionComplete, transactionRequest.IsTransactionComplete != null ? Convert.ToString(transactionRequest.IsTransactionComplete) : null);
 
         if (transactionRequest.MessageHeader == null)
@@ -114,7 +117,7 @@ namespace Kovai.Serverless360.Bam
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageStatus, checkPointRequest.StageStatus?.ToString());
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionMessage, checkPointRequest.ExceptionMessage);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionCode, checkPointRequest.ExceptionCode);
-        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BatchId, checkPointRequest.BatchId);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsBatchedStage, checkPointRequest.IsBatchedStage);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsTransactionComplete, checkPointRequest.IsTransactionComplete != null ? Convert.ToString(checkPointRequest.IsTransactionComplete) : null);
 
 
@@ -164,7 +167,10 @@ namespace Kovai.Serverless360.Bam
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageStatus, correlationCheckPointRequest.StageStatus?.ToString());
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionMessage, correlationCheckPointRequest.ExceptionMessage);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.ExceptionCode, correlationCheckPointRequest.ExceptionCode);
-        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BatchId, correlationCheckPointRequest.BatchId);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsBatchedTransaction, transactionRequest.IsBatchedTransaction);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BatchId, transactionRequest.BatchId);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsBatchedStage, transactionRequest.IsBatchedStage);
+        _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.StageBatchId, transactionRequest.StageBatchId);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.IsTransactionComplete, correlationCheckPointRequest.IsTransactionComplete != null ? Convert.ToString(correlationCheckPointRequest.IsTransactionComplete) : null);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.BusinessProcess, correlationCheckPointRequest.BusinessProcess);
         _client.DefaultRequestHeaders.AddOrReplace(Constants.Headers.Transaction, correlationCheckPointRequest.Transaction);
